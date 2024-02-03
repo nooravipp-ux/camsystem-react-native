@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
-import { View, Text, Image, StyleSheet,ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet,ScrollView, TouchableOpacity, Linking } from 'react-native';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import moment from 'moment';
@@ -96,7 +96,7 @@ const ReportDetailScreen = ({route, navigation}) => {
 					<Text style={{flex: 1, color:'#ffffff', backgroundColor: '#00aeef', fontSize: 10, fontWeight:'bold', padding: 6}}>LAMPIRAN FOTO</Text>
 					<ScrollView style={{ flexDirection: 'row', padding: 5}} horizontal={true}>
 					{files?.map((val, index) => {
-						if(val.extension_file !== "application/pdf"){
+						if(val.extension_file == "image/jpeg"){
 							return (
 								<ImageModal
 									key={index.toString()}
@@ -104,6 +104,28 @@ const ReportDetailScreen = ({route, navigation}) => {
 									style={styles.imgContainer}
 									source={{ uri: `${BASE_IMG_URL}${val.file}`}}
 								/>				
+							)
+						}
+					})}
+					</ScrollView>
+                </View>
+				<View style={{flex: 1, marginTop: 25, padding: 5}}>
+					<Text style={{flex: 1, color:'#ffffff', backgroundColor: '#00aeef', fontSize: 10, fontWeight:'bold', padding: 6}}>LAMPIRAN VIDEO</Text>
+					<ScrollView style={{ flexDirection: 'row', padding: 5}} horizontal={true}>
+					{files?.map((val, index) => {
+						if(val.extension_file == "video/mp4"){
+							return (
+								<TouchableOpacity
+									key={index.toString()}
+									onPress={() => {
+										const url = `${BASE_IMG_URL}${val.file}`;
+										Linking.openURL(url).catch(err => console.error('An error occurred', err));
+									}}
+								>
+									<Text style={{ flex: 1, color: 'black', fontSize: 10, padding: 6 }}>
+										{val.file.substring(val.file.lastIndexOf('/'))} (Klik Untuk Melihat Video)
+									</Text>
+								</TouchableOpacity>	
 							)
 						}
 					})}
@@ -123,7 +145,7 @@ const ReportDetailScreen = ({route, navigation}) => {
 										})}
 									}
 								>
-									<Text style={{flex: 1, color:'black', fontSize: 10, padding: 6}}>{val.file.substring(val.file.lastIndexOf('/'))} (Klik Untuk Melihat Laporan)</Text>
+									<Text style={{flex: 1, color:'black', fontSize: 10, padding: 6}}>{val.file.substring(val.file.lastIndexOf('/'))} (Klik Untuk Melihat Dokumen)</Text>
 								</TouchableOpacity>				
 							)
 						}
@@ -184,6 +206,10 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingLeft: 7,
 		paddingTop: 5,
+	},
+	video: {
+		width: '100%',
+		height: 300,
 	},
 
 });

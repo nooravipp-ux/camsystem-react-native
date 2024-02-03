@@ -98,7 +98,7 @@ const ReportScreen = ( {navigation} ) => {
 			<SafeAreaView style={styles.newsListContainer}>
 				<FlatList
 					data={reports}
-					renderItem={({ item }) => <Item id={item.id} desc={item.desc} date={item.date} hour={item.hour} image={item.photos.find(val => val.extension_file !== "application/pdf")} />}
+					renderItem={({ item }) => <Item id={item.id} desc={item.desc} date={item.date} hour={item.hour} image={item.photos.find(val => val.extension_file !== "application/pdf" && val.extension_file !== "video/mp4")} />}
 					keyExtractor={item => item.id}
 					refreshControl={
 						<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />

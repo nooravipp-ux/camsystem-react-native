@@ -58,17 +58,28 @@ function ReportFormStep3({ navigation }) {
 		updateFormData({ kodam_id: "" });
 	}
 
+	const deleteImage = (index) => {
+		const updatedImages = [...imageCamera];
+		updatedImages.splice(index, 1);
+		setImageCamera(updatedImages);
+	};
+	  
+	const deleteFile = (index) => {
+		const updatedFiles = [...files];
+		updatedFiles.splice(index, 1);
+		setFiles(updatedFiles);
+	};
+
 	const captureImage = async () => {
 		try {
 			check(Platform.OS === 'android' ? PERMISSIONS.ANDROID.CAMERA : PERMISSIONS.IOS.CAMERA)
             .then((result) => {
                 if(result === RESULTS.GRANTED) {
                     let options = {
-						mediaType: 'photo', 
+						mediaType: ['photo', 'video'], // Include both photo and video options
 						quality: 0.5,
-						includeExtra: true,
-						cameraType: 'back',
-					};
+						multiple: true,
+					  };
 
 					launchCamera(options, (response) => {		
 						if (response.didCancel) {
@@ -139,7 +150,7 @@ function ReportFormStep3({ navigation }) {
 	const  pickDocument = async () => {
 		try {
 			const res = await DocumentPicker.pick({
-				type: [DocumentPicker.types.pdf],
+				type: [DocumentPicker.types.allFiles],
 				allowMultiSelection: true,
 			})
 			setFiles((prevSelectedFile) => prevSelectedFile.concat(res));
@@ -420,7 +431,9 @@ function ReportFormStep3({ navigation }) {
 				{
 					imageCamera.map((image, index) => {
 						return (
-							<Image key={index} source={{ uri:image.uri }} style={styles.profileImage} />
+							<TouchableOpacity onPress={() => deleteImage(index)}>
+								<Image key={index} source={{ uri:image.uri }} style={styles.profileImage} />
+							</TouchableOpacity>
 							);
 						})
 				}
@@ -429,7 +442,9 @@ function ReportFormStep3({ navigation }) {
 				<View>
 					{files?.map((val, index) => {
 						return (
-							<Text key={index}>{val.name}</Text>
+							<TouchableOpacity onPress={() => deleteFile(index)}>
+								<Text key={index}>{val.name}</Text>
+							</TouchableOpacity>
 						)
 					})}
 				</View>
