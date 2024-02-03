@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>camsystem</string>
+	<string>PAMSYSTEM</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -35,11 +35,18 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+    <string>Izinkan aplikasi untuk mengakses Kamera pada Perangkat</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Izinkan aplikasi untuk mengakses foto pada galeri pada perangkat</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Izinkan aplikasi untuk mengakses lokasi </string>
+	<key>NSContactsUsageDescription</key>
+  	<string>Izinkan aplikasi unutk mengakses kontak pada perangkat</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
+
 	<array>
 		<string>armv7</string>
 	</array>
